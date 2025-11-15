@@ -10,15 +10,15 @@ import { z } from 'zod';
 import { Package } from 'lucide-react';
 
 const loginSchema = z.object({
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'Senha deve ter no mínimo 6 caracteres'),
+  email: z.string().email('Invalid email'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 const signupSchema = loginSchema.extend({
-  name: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres'),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: 'As senhas não coincidem',
+  message: 'Passwords do not match',
   path: ['confirmPassword'],
 });
 
@@ -48,7 +48,7 @@ const Auth = () => {
         const validation = loginSchema.safeParse({ email, password });
         if (!validation.success) {
           toast({
-            title: 'Erro de validação',
+            title: 'Validation error',
             description: validation.error.errors[0].message,
             variant: 'destructive',
           });
@@ -58,14 +58,14 @@ const Auth = () => {
         const { error } = await signIn(email, password);
         if (error) {
           toast({
-            title: 'Erro ao fazer login',
+            title: 'Login error',
             description: error.message,
             variant: 'destructive',
           });
         } else {
           toast({
-            title: 'Login realizado!',
-            description: 'Bem-vindo de volta.',
+            title: 'Login successful!',
+            description: 'Welcome back.',
           });
           navigate('/');
         }
@@ -73,7 +73,7 @@ const Auth = () => {
         const validation = signupSchema.safeParse({ email, password, confirmPassword, name });
         if (!validation.success) {
           toast({
-            title: 'Erro de validação',
+            title: 'Validation error',
             description: validation.error.errors[0].message,
             variant: 'destructive',
           });
@@ -83,14 +83,14 @@ const Auth = () => {
         const { error } = await signUp(email, password, name);
         if (error) {
           toast({
-            title: 'Erro ao criar conta',
+            title: 'Error creating account',
             description: error.message,
             variant: 'destructive',
           });
         } else {
           toast({
-            title: 'Conta criada!',
-            description: 'Você já pode fazer login.',
+            title: 'Account created!',
+            description: 'You can now log in.',
           });
           setIsLogin(true);
           setPassword('');
@@ -111,18 +111,18 @@ const Auth = () => {
           </div>
           <CardTitle className="text-3xl font-bold">OrderSync</CardTitle>
           <CardDescription>
-            {isLogin ? 'Entre na sua conta' : 'Crie sua conta'}
+            {isLogin ? 'Sign in to your account' : 'Create your account'}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
               <div className="space-y-2">
-                <Label htmlFor="name">Nome</Label>
+                <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
                   type="text"
-                  placeholder="Seu nome completo"
+                  placeholder="Your full name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -134,14 +134,14 @@ const Auth = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="seu@email.com"
+                placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -153,7 +153,7 @@ const Auth = () => {
             </div>
             {!isLogin && (
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirmar Senha</Label>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -165,7 +165,7 @@ const Auth = () => {
               </div>
             )}
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Processando...' : isLogin ? 'Entrar' : 'Cadastrar'}
+              {loading ? 'Processing...' : isLogin ? 'Sign In' : 'Sign Up'}
             </Button>
             <Button
               type="button"
@@ -177,7 +177,7 @@ const Auth = () => {
                 setConfirmPassword('');
               }}
             >
-              {isLogin ? 'Criar conta' : 'Já tenho conta'}
+              {isLogin ? 'Create account' : 'Already have an account'}
             </Button>
           </form>
         </CardContent>

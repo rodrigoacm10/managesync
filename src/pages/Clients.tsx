@@ -17,7 +17,7 @@ interface Client {
 }
 
 const clientSchema = z.object({
-  name: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres').max(100),
+  name: z.string().min(2, 'Name must be at least 2 characters').max(100),
 });
 
 const Clients = () => {
@@ -44,7 +44,7 @@ const Clients = () => {
       setClients(data || []);
     } catch (error: any) {
       toast({
-        title: 'Erro ao carregar clientes',
+        title: 'Error loading clients',
         description: error.message,
         variant: 'destructive',
       });
@@ -62,7 +62,7 @@ const Clients = () => {
 
       if (!validation.success) {
         toast({
-          title: 'Erro de validação',
+          title: 'Validation error',
           description: validation.error.errors[0].message,
           variant: 'destructive',
         });
@@ -79,8 +79,8 @@ const Clients = () => {
       if (error) throw error;
 
       toast({
-        title: 'Cliente criado!',
-        description: 'O cliente foi adicionado com sucesso.',
+        title: 'Client created!',
+        description: 'The client was added successfully.',
       });
 
       setName('');
@@ -88,7 +88,7 @@ const Clients = () => {
       fetchClients();
     } catch (error: any) {
       toast({
-        title: 'Erro ao criar cliente',
+        title: 'Error creating client',
         description: error.message,
         variant: 'destructive',
       });
@@ -107,14 +107,14 @@ const Clients = () => {
       if (error) throw error;
 
       toast({
-        title: 'Cliente excluído',
-        description: 'O cliente foi removido com sucesso.',
+        title: 'Client deleted',
+        description: 'The client was removed successfully.',
       });
 
       fetchClients();
     } catch (error: any) {
       toast({
-        title: 'Erro ao excluir cliente',
+        title: 'Error deleting client',
         description: error.message,
         variant: 'destructive',
       });
@@ -131,33 +131,33 @@ const Clients = () => {
             </Button>
             <div className="flex items-center gap-2">
               <Users className="h-6 w-6 text-primary" />
-              <h1 className="text-2xl font-bold">Clientes</h1>
+              <h1 className="text-2xl font-bold">Clients</h1>
             </div>
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
-                Novo Cliente
+                New Client
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Criar Cliente</DialogTitle>
+                <DialogTitle>Create Client</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Nome do Cliente</Label>
+                  <Label htmlFor="name">Client Name</Label>
                   <Input
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Ex: João Silva"
+                    placeholder="e.g. John Smith"
                     required
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Criando...' : 'Criar Cliente'}
+                  {loading ? 'Creating...' : 'Create Client'}
                 </Button>
               </form>
             </DialogContent>
@@ -187,9 +187,9 @@ const Clients = () => {
         {clients.length === 0 && (
           <div className="text-center py-12">
             <Users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium">Nenhum cliente cadastrado</h3>
+            <h3 className="text-lg font-medium">No clients registered</h3>
             <p className="text-sm text-muted-foreground mt-2">
-              Crie seu primeiro cliente para começar
+              Create your first client to get started
             </p>
           </div>
         )}
