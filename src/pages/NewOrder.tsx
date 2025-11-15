@@ -58,7 +58,7 @@ const NewOrder = () => {
       setProducts(productsRes.data || []);
     } catch (error: any) {
       toast({
-        title: 'Erro ao carregar dados',
+        title: 'Error loading data',
         description: error.message,
         variant: 'destructive',
       });
@@ -103,8 +103,8 @@ const NewOrder = () => {
     const validItems = orderItems.filter(item => item.productId && item.quantity > 0);
     if (validItems.length === 0) {
       toast({
-        title: 'Erro',
-        description: 'Adicione pelo menos um produto ao pedido',
+        title: 'Error',
+        description: 'Add at least one product to the order',
         variant: 'destructive',
       });
       return;
@@ -144,14 +144,14 @@ const NewOrder = () => {
       if (itemsError) throw itemsError;
 
       toast({
-        title: 'Pedido criado!',
-        description: 'O pedido foi registrado com sucesso.',
+        title: 'Order created!',
+        description: 'The order was registered successfully.',
       });
 
       navigate('/');
     } catch (error: any) {
       toast({
-        title: 'Erro ao criar pedido',
+        title: 'Error creating order',
         description: error.message,
         variant: 'destructive',
       });
@@ -167,22 +167,22 @@ const NewOrder = () => {
           <Button variant="ghost" size="icon" onClick={() => navigate('/')}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="ml-4 text-2xl font-bold">Novo Pedido</h1>
+          <h1 className="ml-4 text-2xl font-bold">New Order</h1>
         </div>
       </header>
 
       <main className="container mx-auto max-w-3xl p-4">
         <Card>
           <CardHeader>
-            <CardTitle>Informações do Pedido</CardTitle>
+            <CardTitle>Order Information</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="client">Cliente</Label>
+                <Label htmlFor="client">Client</Label>
                 <Select value={selectedClient} onValueChange={setSelectedClient} required>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione um cliente" />
+                    <SelectValue placeholder="Select a client" />
                   </SelectTrigger>
                   <SelectContent>
                     {clients.map((client) => (
@@ -195,7 +195,7 @@ const NewOrder = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="date">Data e Hora</Label>
+                <Label htmlFor="date">Date and Time</Label>
                 <Input
                   id="date"
                   type="datetime-local"
@@ -207,10 +207,10 @@ const NewOrder = () => {
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label>Produtos</Label>
+                  <Label>Products</Label>
                   <Button type="button" variant="outline" size="sm" onClick={addOrderItem}>
                     <Plus className="mr-2 h-4 w-4" />
-                    Adicionar Produto
+                    Add Product
                   </Button>
                 </div>
 
@@ -219,19 +219,19 @@ const NewOrder = () => {
                     <CardContent className="pt-6">
                       <div className="flex gap-4">
                         <div className="flex-1 space-y-2">
-                          <Label>Produto</Label>
+                          <Label>Product</Label>
                           <Select
                             value={item.productId}
                             onValueChange={(value) => updateOrderItem(index, 'productId', value)}
                             required
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Selecione" />
+                              <SelectValue placeholder="Select" />
                             </SelectTrigger>
                             <SelectContent>
                               {products.map((product) => (
                                 <SelectItem key={product.id} value={product.id}>
-                                  {product.name} - R$ {product.price.toFixed(2)}
+                                  {product.name} - ${product.price.toFixed(2)}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -239,7 +239,7 @@ const NewOrder = () => {
                         </div>
 
                         <div className="w-24 space-y-2">
-                          <Label>Qtd</Label>
+                          <Label>Qty</Label>
                           <Input
                             type="number"
                             min="1"
@@ -266,7 +266,7 @@ const NewOrder = () => {
 
                       {item.productId && (
                         <div className="mt-2 text-sm text-muted-foreground">
-                          Subtotal: R$ {(item.price * item.quantity).toFixed(2)}
+                          Subtotal: ${(item.price * item.quantity).toFixed(2)}
                         </div>
                       )}
                     </CardContent>
@@ -281,19 +281,19 @@ const NewOrder = () => {
                   onCheckedChange={(checked) => setDelivered(checked as boolean)}
                 />
                 <Label htmlFor="delivered" className="cursor-pointer">
-                  Marcar como entregue
+                  Mark as delivered
                 </Label>
               </div>
 
               <div className="border-t pt-4">
                 <div className="flex justify-between text-lg font-bold">
-                  <span>Total do Pedido</span>
-                  <span className="text-primary">R$ {calculateTotal().toFixed(2)}</span>
+                  <span>Order Total</span>
+                  <span className="text-primary">${calculateTotal().toFixed(2)}</span>
                 </div>
               </div>
 
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? 'Criando...' : 'Criar Pedido'}
+                {loading ? 'Creating...' : 'Create Order'}
               </Button>
             </form>
           </CardContent>

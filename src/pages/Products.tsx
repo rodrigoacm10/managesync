@@ -18,8 +18,8 @@ interface Product {
 }
 
 const productSchema = z.object({
-  name: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres').max(100),
-  price: z.number().positive('Preço deve ser maior que zero'),
+  name: z.string().min(2, 'Name must be at least 2 characters').max(100),
+  price: z.number().positive('Price must be greater than zero'),
 });
 
 const Products = () => {
@@ -47,7 +47,7 @@ const Products = () => {
       setProducts(data || []);
     } catch (error: any) {
       toast({
-        title: 'Erro ao carregar produtos',
+        title: 'Error loading products',
         description: error.message,
         variant: 'destructive',
       });
@@ -68,7 +68,7 @@ const Products = () => {
 
       if (!validation.success) {
         toast({
-          title: 'Erro de validação',
+          title: 'Validation error',
           description: validation.error.errors[0].message,
           variant: 'destructive',
         });
@@ -86,8 +86,8 @@ const Products = () => {
       if (error) throw error;
 
       toast({
-        title: 'Produto criado!',
-        description: 'O produto foi adicionado com sucesso.',
+        title: 'Product created!',
+        description: 'The product was added successfully.',
       });
 
       setName('');
@@ -96,7 +96,7 @@ const Products = () => {
       fetchProducts();
     } catch (error: any) {
       toast({
-        title: 'Erro ao criar produto',
+        title: 'Error creating product',
         description: error.message,
         variant: 'destructive',
       });
@@ -115,14 +115,14 @@ const Products = () => {
       if (error) throw error;
 
       toast({
-        title: 'Produto excluído',
-        description: 'O produto foi removido com sucesso.',
+        title: 'Product deleted',
+        description: 'The product was removed successfully.',
       });
 
       fetchProducts();
     } catch (error: any) {
       toast({
-        title: 'Erro ao excluir produto',
+        title: 'Error deleting product',
         description: error.message,
         variant: 'destructive',
       });
@@ -139,33 +139,33 @@ const Products = () => {
             </Button>
             <div className="flex items-center gap-2">
               <Package className="h-6 w-6 text-primary" />
-              <h1 className="text-2xl font-bold">Produtos</h1>
+              <h1 className="text-2xl font-bold">Products</h1>
             </div>
           </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
-                Novo Produto
+                New Product
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Criar Produto</DialogTitle>
+                <DialogTitle>Create Product</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Nome do Produto</Label>
+                  <Label htmlFor="name">Product Name</Label>
                   <Input
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Ex: Pizza Margherita"
+                    placeholder="e.g. Margherita Pizza"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price">Preço</Label>
+                  <Label htmlFor="price">Price</Label>
                   <Input
                     id="price"
                     type="number"
@@ -177,7 +177,7 @@ const Products = () => {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Criando...' : 'Criar Produto'}
+                  {loading ? 'Creating...' : 'Create Product'}
                 </Button>
               </form>
             </DialogContent>
@@ -212,9 +212,9 @@ const Products = () => {
         {products.length === 0 && (
           <div className="text-center py-12">
             <Package className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium">Nenhum produto cadastrado</h3>
+            <h3 className="text-lg font-medium">No products registered</h3>
             <p className="text-sm text-muted-foreground mt-2">
-              Crie seu primeiro produto para começar
+              Create your first product to get started
             </p>
           </div>
         )}

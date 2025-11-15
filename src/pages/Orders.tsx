@@ -73,7 +73,7 @@ const Orders = () => {
       setOrders(data || []);
     } catch (error: any) {
       toast({
-        title: 'Erro ao carregar pedidos',
+        title: 'Error loading orders',
         description: error.message,
         variant: 'destructive',
       });
@@ -100,14 +100,14 @@ const Orders = () => {
       if (error) throw error;
 
       toast({
-        title: 'Status atualizado',
-        description: `Pedido marcado como ${!currentStatus ? 'entregue' : 'não entregue'}.`,
+        title: 'Status updated',
+        description: `Order marked as ${!currentStatus ? 'delivered' : 'not delivered'}.`,
       });
 
       fetchOrders();
     } catch (error: any) {
       toast({
-        title: 'Erro ao atualizar status',
+        title: 'Error updating status',
         description: error.message,
         variant: 'destructive',
       });
@@ -147,22 +147,22 @@ const Orders = () => {
               className="w-auto"
             />
             <span className="text-sm text-muted-foreground">
-              {filteredOrders.length} pedido(s)
+              {filteredOrders.length} order(s)
             </span>
           </div>
 
           <div className="flex flex-wrap gap-2">
             <Button onClick={() => navigate('/products')}>
               <Package className="mr-2 h-4 w-4" />
-              Produtos
+              Products
             </Button>
             <Button onClick={() => navigate('/clients')}>
               <Users className="mr-2 h-4 w-4" />
-              Clientes
+              Clients
             </Button>
             <Button onClick={() => navigate('/orders/new')} className="bg-primary">
               <Plus className="mr-2 h-4 w-4" />
-              Novo Pedido
+              New Order
             </Button>
           </div>
         </div>
@@ -184,7 +184,7 @@ const Orders = () => {
                     onClick={() => toggleDelivered(order.id, order.delivered)}
                     style={{ cursor: 'pointer' }}
                   >
-                    {order.delivered ? 'Entregue' : 'Pendente'}
+                    {order.delivered ? 'Delivered' : 'Pending'}
                   </Badge>
                 </div>
               </CardHeader>
@@ -213,9 +213,9 @@ const Orders = () => {
         {filteredOrders.length === 0 && (
           <div className="text-center py-12">
             <Package className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium">Nenhum pedido encontrado</h3>
+            <h3 className="text-lg font-medium">No orders found</h3>
             <p className="text-sm text-muted-foreground mt-2">
-              Crie seu primeiro pedido para começar
+              Create your first order to get started
             </p>
           </div>
         )}
